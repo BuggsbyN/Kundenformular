@@ -189,7 +189,10 @@ if st.button("Kundenprofil speichern"):
     sheet = client.open_by_key(spreadsheet_id).sheet1
 
     # Neue Kundendaten als Liste anhängen
-    sheet.append_row([neuer_Kunde[col] for col in header])
+    sheet.append_row([
+        ", ".join(neuer_Kunde[col]) if isinstance(neuer_Kunde[col], list)
+        else str(neuer_Kunde.get(col, "") or "") for col in header
+    ])
 
     st.success("Kunde wurde in Google Sheets eingetragen!")
 
